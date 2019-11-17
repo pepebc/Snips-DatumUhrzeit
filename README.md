@@ -1,4 +1,4 @@
-# Snips-DatumUhrzeit 🕑
+# Snips-FechaHora 🕑
 A date and time app for Snips.ai
 
 ## Installation
