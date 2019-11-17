@@ -6,7 +6,7 @@ import random
 import toml
 
 
-USERNAME_INTENTS = "domi"
+USERNAME_INTENTS = "pepebc"
 MQTT_BROKER_ADDRESS = "localhost:1883"
 MQTT_USERNAME = None
 MQTT_PASSWORD = None
@@ -24,8 +24,8 @@ def subscribe_intent_callback(hermes, intent_message):
         month = datetime.datetime.now().month
         day = datetime.datetime.now().day
         weekday = datetime.datetime.now().isoweekday()
-        weekday_list = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
-        result_sentence = "Heute ist {0}, der {1}.{2}.{3} .".format(weekday_list[weekday - 1], day, month, year)
+        weekday_list = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+        result_sentence = "HOy es {0}, el {1}.{2}.{3} .".format(weekday_list[weekday - 1], day, month, year)
         current_session_id = intent_message.session_id
         hermes.publish_end_session(current_session_id, result_sentence)
 
@@ -35,10 +35,10 @@ def subscribe_intent_callback(hermes, intent_message):
         if minutes == 0:
             minutes = ""
         if hours == 1:
-            result_sentence = "ein Uhr {0} .".format(minutes)
+            result_sentence = "La una {0} .".format(minutes)
         else:
-            result_sentence = "{0} Uhr {1} .".format(hours, minutes)
-        first_part = ["Gerade ist es", "Es ist jetzt", "Es ist", "Die aktuelle Zeit ist"]
+            result_sentence = "{0} una {1} .".format(hours, minutes)
+        first_part = ["Eso es todo", "Ahora es", "Es", "La hora actual es"]
         result_sentence = random.choice(first_part) + " " + result_sentence
         current_session_id = intent_message.session_id
         hermes.publish_end_session(current_session_id, result_sentence)
@@ -46,29 +46,29 @@ def subscribe_intent_callback(hermes, intent_message):
     elif intentname == user_intent("weekNumber"):
         datetime_str = intent_message.slots.date.first().value[:-10]
         datetime_obj = datetime.datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
-        result_sentence = "An diesem Datum ist die Kalenderwoche {0}".format(datetime_obj.isocalendar()[1])
+        result_sentence = "Esta fecha es la semana {0}".format(datetime_obj.isocalendar()[1])
         current_session_id = intent_message.session_id
         hermes.publish_end_session(current_session_id, result_sentence)
 
     elif intentname == user_intent("dateInfo"):
-        result_sentence = "Diese Funktion ist noch nicht vorhanden, wird aber bald hinzugefügt."
+        result_sentence = "Esta característica aún no existe, pero se agregará pronto."
         datetype = intent_message.slots.datetype.first().value
         if datetype == 'weekday' or 'wochentag' in datetype:
             weekday = datetime.datetime.now().isoweekday()
-            weekday_list = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
-            result_sentence = "Heute haben wir {weekday}.".format(weekday=weekday_list[weekday - 1])
+            weekday_list = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+            result_sentence = "Hoy es {weekday}.".format(weekday=weekday_list[weekday - 1])
         elif datetype == 'year':
             year = datetime.datetime.now().year
-            result_sentence = "Wir sind im Jahr {year}".format(year=year)
+            result_sentence = "Estamos en el año {year}".format(year=year)
         elif datetype == 'weeknumber' or 'kw' in datetype:
             weeknumber = datetime.datetime.now().isocalendar()[1]
-            result_sentence = "Wir haben gerade die Kalenderwoche {weeknumber}".format(weeknumber=weeknumber)
+            result_sentence = "Semana actual {weeknumber}".format(weeknumber=weeknumber)
         elif datetype == 'minute':
             minutes = datetime.datetime.now().minute
-            result_sentence = "Wir haben die Minute {minutes}".format(minutes=minutes)
+            result_sentence = "Es el minuto {minutes}".format(minutes=minutes)
         elif datetype == 'hour':
             hours = datetime.datetime.now().hour
-            result_sentence = "Wir haben gerade die Stunde {hours}".format(hours=hours)
+            result_sentence = "Hora actual {hours}".format(hours=hours)
         current_session_id = intent_message.session_id
         hermes.publish_end_session(current_session_id, result_sentence)
 
