@@ -25,7 +25,7 @@ def subscribe_intent_callback(hermes, intent_message):
         day = datetime.datetime.now().day
         weekday = datetime.datetime.now().isoweekday()
         weekday_list = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-        result_sentence = "HOy es {0}, el {1}.{2}.{3} .".format(weekday_list[weekday - 1], day, month, year)
+        result_sentence = "Hoy es {0}, el {1}.{2}.{3} .".format(weekday_list[weekday - 1], day, month, year)
         current_session_id = intent_message.session_id
         hermes.publish_end_session(current_session_id, result_sentence)
 
